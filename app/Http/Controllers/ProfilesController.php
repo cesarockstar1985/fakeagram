@@ -57,11 +57,13 @@ class ProfilesController extends Controller
         $this->authorize('update', $user->profile);
 
         $data = request()->validate([
-            'name'         => 'required',
-            'email'   => 'required',
-            'avatar'         => 'image'
+            'title'         => 'required',
+            'description'   => 'max:255',
+            'url'           => 'nullable',
+            'avatar'        => 'image'
         ]);
 
+        //dd(request()->all());
 
         if (request('image')) {
             $imagePath = request('image')->store('profile', 'public');
@@ -72,14 +74,11 @@ class ProfilesController extends Controller
             $imageArray = ['image' => $imagePath];
         }
 
-
         auth()->user()->profile->update(array_merge(
             $data,
             $imageArray ?? []
         ));
 
         return redirect("/profile/{$user->id}");
-
-        //dd(request()->all());
     }
 }
