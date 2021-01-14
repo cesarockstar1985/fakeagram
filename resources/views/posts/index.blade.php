@@ -3,8 +3,7 @@
 @section('content')
 <div class="container">
 
-    @foreach($posts as $post)
-
+    @forelse($posts as $post)
     <div class="row">
         <div class="col-6 offset-3">
             <a href="/p/{{ $post->id }}">
@@ -31,8 +30,9 @@
             </div>
         </div>
     </div>
-
-    @endforeach
+    @empty
+    <x-noPosts />
+    @endforelse
 
     <div class="row">
         <div class="col-12 d-flex justify-center">
